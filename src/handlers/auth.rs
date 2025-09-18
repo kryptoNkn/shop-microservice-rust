@@ -1,5 +1,6 @@
-use actix_web::{post, get, HttpResponse, HttpRequest, cookie::Cookie};
+use actix_web::{post, get, HttpResponse, HttpRequest, cookie::{Cookie, SameSite}};
 use crate::models::Message;
+use log::warn;
 
 #[post("/login")]
 pub async fn login() -> HttpResponse {
@@ -7,6 +8,8 @@ pub async fn login() -> HttpResponse {
 
     let cookie = Cookie::build("auth_token", token)
         .http_only(true)
+        .same_site(SameSite::Lax)
+        .path("/")
         .finish();
 
     HttpResponse::Ok()
@@ -16,9 +19,28 @@ pub async fn login() -> HttpResponse {
 
 #[get("/check")]
 pub async fn check(req: HttpRequest) -> HttpResponse {
-    if let Some(cookie) = req.cookie("auth_token") {
-        HttpResponse::Ok().json(Message { msg: format!("Token: {}", cookie.value()) })
-    } else {
-        HttpResponse::Unauthorized().json(Message { msg: "Not authorized".to_string() })
+    match req.cookie("auth_token") {
+        Some(cookie) => HttpResponse::Ok()
+            .json(Message { msg: format!("Token: {}", cookie.value()) }),
+        None => {
+            warn!("Unauthorized access attempt");
+            HttpResponse::Unauthorized()
+                .json(Message { msg: "Not authorized".to_string() })
+        }
     }
+}
+
+#[post("/logout")]
+pub async fn logout() -> HttpResponse {
+    let cookie = Cookie::build("auth_token", "")
+        .http_only(true)
+        .secure(true)
+        .same_site(SameSite::Lax)
+        .path("/")
+        .max_age(time::Duration::seconds(0))
+        .finish();
+
+    HttpResponse::Ok()
+        .cookie(cookie)
+        .json(Message { msg: "Logged out".to_string() })
 }
