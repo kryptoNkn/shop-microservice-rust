@@ -1,11 +1,12 @@
 [package]
-name = "shop-microservice-rust"
+name = "shop_microservice"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 
 [dependencies]
 actix-web = "4"
-actix-rt = "2"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 base64 = "0.21"
+log = "0.4"
+env_logger = "0.10"

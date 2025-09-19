@@ -1,6 +1,8 @@
 use actix_web::{post, get, HttpResponse, HttpRequest, cookie::{Cookie, SameSite}};
 use crate::models::Message;
 use log::warn;
+use actix_web::cookie::time::Duration;
+
 
 #[post("/login")]
 pub async fn login() -> HttpResponse {
@@ -8,6 +10,7 @@ pub async fn login() -> HttpResponse {
 
     let cookie = Cookie::build("auth_token", token)
         .http_only(true)
+        .secure(true)
         .same_site(SameSite::Lax)
         .path("/")
         .finish();
@@ -37,7 +40,7 @@ pub async fn logout() -> HttpResponse {
         .secure(true)
         .same_site(SameSite::Lax)
         .path("/")
-        .max_age(time::Duration::seconds(0))
+        .max_age(Duration::seconds(0))
         .finish();
 
     HttpResponse::Ok()
