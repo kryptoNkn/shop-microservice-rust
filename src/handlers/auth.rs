@@ -42,8 +42,8 @@ pub async fn logout() -> HttpResponse {
         .path("/")
         .max_age(Duration::seconds(0))
         .finish();
-
-    HttpResponse::Ok()
+ 
+        HttpResponse::Ok()
         .cookie(cookie)
         .json(Message { msg: "Logged out".to_string() })
 }
