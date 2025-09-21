@@ -2,11 +2,13 @@ mod models;
 mod handlers {
     pub mod auth;
     pub mod cart;
+    pub mod products;
 }
 
 use actix_web::{App, HttpServer};
 use handlers::auth::{login, check, logout};
 use handlers::cart::{add_to_cart, remove_from_cart, view_cart};
+use handlers::products::list_products;
 use env_logger;
 
 #[actix_web::main]
@@ -21,6 +23,7 @@ async fn main() -> std::io::Result<()> {
             .service(add_to_cart)
             .service(remove_from_cart)
             .service(view_cart)
+            .service(list_products)
     })
     .bind("127.0.0.1:8080")?
     .run()

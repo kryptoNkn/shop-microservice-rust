@@ -7,6 +7,11 @@ pub struct Product {
     pub price: f64,
 }
 
+#[derive(Serialize, Deserialize, Clone)]
+pub struct ProductCatalog {
+    pub items: Vec<Product>,
+}
+
 #[derive(Serialize, Deserialize, Clone, Default)]
 pub struct Cart {
     pub items: Vec<Product>,
