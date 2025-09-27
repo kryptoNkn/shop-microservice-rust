@@ -11,5 +11,13 @@ pub async fn list_products() -> HttpResponse {
             Product { id: 4, name: "Banana".to_string(), price: 3.0 },
         ],
     };
-    HttpResponse::Ok().json(catalog)
+    
+    match serde_json::to_string_pretty(&catalog) {
+        Ok(pretty_json) => HttpResponse::Ok()
+        .content_type("application/json")
+        .body(pretty_json),
+
+        Err(_) => HttpResponse::InternalServerError()
+        .json("Failed to serialize")
+    }
 }

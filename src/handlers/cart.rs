@@ -1,5 +1,5 @@
-use actix_web::{get, post, HttpRequest, HttpResponse, web, cookie::{Cookie, SameSite}};
-use crate::models::{Cart, Product};
+use actix_web::{cookie::{self, Cookie, SameSite}, dev::always_ready, get, post, web, HttpRequest, HttpResponse};
+use crate::{handlers::cart, models::{Cart, Product}};
 use base64::{encode, decode};
 use std::str;
 use log::warn;
