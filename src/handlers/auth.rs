@@ -3,7 +3,6 @@ use crate::models::Message;
 use log::warn;
 use actix_web::cookie::time::Duration;
 
-
 #[post("/login")]
 pub async fn login() -> HttpResponse {
     let token = "user_token_123";
