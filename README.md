@@ -1,4 +1,4 @@
-# 🛒 Rust Shop API (Actix-web)
+# Rust Shop API (Actix-web)
 
 A simple **Rust + Actix-web** backend project that implements:
 - Authentication with cookies
@@ -9,7 +9,7 @@ This project demonstrates a clean backend structure with separated models, handl
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Clone the repository
 ```bash
@@ -28,18 +28,18 @@ cargo run
 ```
 
 The server will be available at:
-👉 `http://127.0.0.1:8080`
+`http://127.0.0.1:8080`
 
 ---
 
-## 📌 API Endpoints
+## API Endpoints
 
-### 🔑 Authentication
+### Authentication
 - POST `/login` – login (sets `auth_token` cookie)
 - GET `/check` – check authentication
 - POST `/logout` – logout (removes cookie)
 
-## 🛒 Cart
+## Cart
 
 - POST `/cart/add` – add a product
 ```json
@@ -51,6 +51,6 @@ The server will be available at:
 ```
 - GET `/cart` – view the cart
 
-## 📦 Products
+## Products
 
 - GET `/products` – list available products
